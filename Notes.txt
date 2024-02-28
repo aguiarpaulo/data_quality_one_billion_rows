@@ -1,0 +1,34 @@
+pyenv install 3.11.5
+
+poetry init 
+
+poetry shell
+
+poetry add mkdocs
+
+#Creating mkdocs folder
+mkdocs new .
+
+#Start the serve
+poetry run mkdocs serve
+
+# install mermaid plugin to mkdocs 
+poertry add mkdocs-mermaid2-plugin
+
+poetry add 'mkdocs-material'
+
+poetry add 'mkdocstrings[crystal,python]'
+
+#add shortcut
+poetry add taskipy
+
+#formatting the code
+poetry add isort
+poetry add black
+poetry run task format
+
+#adding dataquality
+poetry add pytest
+
+#run tests
+poetry run pytest tests -v
