@@ -32,3 +32,13 @@ poetry add pytest
 
 #run tests
 poetry run pytest tests -v
+
+poetry add sqlalchemy
+
+poetry add python-dotenv
+
+poetry add pandas
+
+poetry add pandera
+
+poetry add duckdb
