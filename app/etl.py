@@ -22,7 +22,7 @@ def load_settings():
 
 @pa.check_output(ProductSchema, lazy=True)
 def extract_from_sql(query: str) -> pd.DataFrame:
-    settings = load_settings
+    settings = load_settings()
     connection_string = f"postgresql://{settings['db_user']}:{settings['db_pass']}@{settings['db_host']}:{settings['db_port']}/{settings['db_name']}"
     engine = create_engine(connection_string)
     with engine.connect() as conn, conn.begin():
@@ -31,7 +31,7 @@ def extract_from_sql(query: str) -> pd.DataFrame:
 
 @pa.check_input(ProductSchema,lazy=True)
 @pa.check_output(ProductSchemaKPI,lazy=True)
-def transform(df: pd.DataFrame) -> pd.Dataframe:
+def transform(df: pd.DataFrame) -> pd.DataFrame:
     #calculate total stock value
     df['total_stock_value'] = df['quantity'] * df['price']
 
@@ -60,13 +60,14 @@ def load_to_duckdb(df:pd.DataFrame, table_name: str, db_file: str = 'my_duckdb.d
     #close connection
     con.close()
 
-if __name__ == "__main__"
+if __name__ == "__main__":
 
     query = 'SELECT * FROM product_bronze'
     df_crm = extract_from_sql(query=query)
-    df_crm_kpi=transform(df_crm)
+    #df_crm_kpi=transform(df_crm)
+    schema_crm=pa.infer_schema(df_crm)
 
-    with open("inferred_schema.json","r") as file:
-        file.write(df_crm_kpi.to_json())
+    with open("schema_crm.py","w", encoding='UTF-8') as file:
+        file.write(schema_crm.to_script())
 
-    load_to_duckdb(df=df_crm_kpi, table_name="kpi_table")
+    #load_to_duckdb(df=df_crm_kpi, table_name="kpi_table")
