@@ -1,4 +1,4 @@
-import pandas as pa
+import pandera as pa
 from pandera.typing import DataFrame, Series
 
 email_regex = r"[^@]+@[^@]+\.[^@]+"

@@ -42,3 +42,8 @@ poetry add pandas
 poetry add pandera
 
 poetry add duckdb
+
+poetry add psycopg2
+
+#Run the etl
+poetry run python app/etl.py
