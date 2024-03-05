@@ -1,17 +1,25 @@
-# Welcome to MkDocs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+## Flow
 
-## Commands
+```mermaid
+graph TD;
+    A[Set Variables] --> B[Read from SQL Database];
+    B --> V[Input Schema Validation];
+    V -->|Failure| X[Error Alert];
+    V -->|Success| C[Transform KPIs];
+    C --> Y[Output Schema Validation];
+    Y -->|Failure| Z[Error Alert];
+    Y -->|Success| D[Save to DuckDB];
+```
+Data Contract
+::: app.schema.ProductSchema
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+Transformations
+Set Variables
+::: app.etl.load_settings
 
-## Project layout
+Read from SQL Database
+::: app.etl.extract_from_sql
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Transform KPIs
+::: app.etl.transform

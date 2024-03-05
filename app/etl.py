@@ -5,7 +5,7 @@ import pandera as pa
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-#from schema import ProductSchema, ProductSchemaKPI
+from schema import ProductSchema, ProductSchemaKPI
 
 def load_settings():
     dotenv_path = Path.cwd() / '.env'
@@ -20,7 +20,7 @@ def load_settings():
     }
     return settings
 
-#@pa.check_output(ProductSchema, lazy=True)
+@pa.check_output(ProductSchema, lazy=True)
 def extract_from_sql(query: str) -> pd.DataFrame:
     settings = load_settings()
     connection_string = f"postgresql://{settings['db_user']}:{settings['db_pass']}@{settings['db_host']}:{settings['db_port']}/{settings['db_name']}"
@@ -29,8 +29,8 @@ def extract_from_sql(query: str) -> pd.DataFrame:
         df_crm = pd.read_sql(query, conn)
     return df_crm
 
-#@pa.check_input(ProductSchema,lazy=True)
-#@pa.check_output(ProductSchemaKPI,lazy=True)
+@pa.check_input(ProductSchema,lazy=True)
+@pa.check_output(ProductSchemaKPI,lazy=True)
 def transform(df: pd.DataFrame) -> pd.DataFrame:
     #calculate total stock value
     df['total_stock_value'] = df['quantity'] * df['price']
@@ -46,7 +46,7 @@ def transform(df: pd.DataFrame) -> pd.DataFrame:
 import duckdb
 import pandas as pd
 
-#@pa.check_input(ProductSchemaKPI,lazy=True)
+@pa.check_input(ProductSchemaKPI,lazy=True)
 def load_to_duckdb(df:pd.DataFrame, table_name: str, db_file: str = 'my_duckdb.db'):
     #connect to duckdb
     con = duckdb.connect(database=db_file, read_only=False)
