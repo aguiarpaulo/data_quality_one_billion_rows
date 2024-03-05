@@ -1,9 +1,9 @@
 site_name: My Docs
 
 theme:
-name: material
+  name: material
 
 plugins:
-    - search
-    - mermaid2
-    - mkdostrings
+  - search
+  - mermaid2
+  - mkdocstrings

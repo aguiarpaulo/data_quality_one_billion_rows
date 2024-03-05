@@ -50,3 +50,5 @@ poetry run python app/etl.py
 
 #run test
 poetry run test_function.py 
+
+poetry run python app/read_duckdb.py
