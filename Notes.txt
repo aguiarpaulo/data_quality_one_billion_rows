@@ -47,3 +47,6 @@ poetry add psycopg2
 
 #Run the etl
 poetry run python app/etl.py
+
+#run test
+poetry run test_function.py 
